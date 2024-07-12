@@ -1,0 +1,57 @@
+--I'll start with a general query to get a feel for the info contained in the database and see how it is visually represented.  
+
+SELECT * 
+FROM fortune_companies
+
+
+
+
+--Now I'm going to find out how many companies in the database offer healthcare benefits. 
+
+SELECT SUM(healthcare_benefits),
+CASE WHEN healthcare_benefits IS 0 THEN 'False' ELSE 'True' END
+FROM fortune_companies
+
+--Out of 43 companies, 30 offer healthcare benefits. Not too bad. If it had less than 10 , it probably wouldn't be worth it to comb through the list for potential jobs with those companies. 
+
+
+
+
+--I like that quite a few of these companies offer healthcare benefits. I wonder which companies and industries offer paid time off and who has the most paid time off days. I'm also curious who is offering maternity leave and for how long.
+
+SELECT company_name, industry, maternity_leave_weeks, paid_time_off_days
+FROM fortune_companies
+WHERE paid_time_off_days >= "20" 
+AND maternity_leave_weeks >= "14"
+
+--NICE!!! It looks like Technology is the way to go if you're looking for higher PTO and maternity leave.  
+
+
+
+
+--I'd like to see all the info I've queried in one place. That way I can really hone in on the company(ies) in which I'd like to apply. 
+
+SELECT company_name, maternity_leave_weeks, paid_time_off_days, ROUND(avg_employee_tenure) AS retention_years,
+CASE WHEN healthcare_benefits IS 0 THEN 'False' ELSE 'True' END
+FROM fortune_companies
+GROUP BY avg_employee_tenure
+HAVING maternity_leave_weeks >= '14' AND paid_time_off_days >= '20' 
+
+--Awesome! Looks like I'm heading over to Indeed to see if there's any openings for me!
+
+
+
+
+
+
+
+--I'm liking what I'm seeing so far but I want to take a look at retention. High turnover makes me kind of nervous. Let's see who's hanging on to their people.
+
+SELECT company_name, maternity_leave_weeks, paid_time_off_days, ROUND(avg_employee_tenure) AS retention_years 
+FROM fortune_companies
+GROUP BY avg_employee_tenure
+HAVING maternity_leave_weeks >= '14' AND paid_time_off_days >= '20' 
+
+--So it looks like we've got some fairly stable companies here. Retention is pretty good and so are some of the benefits.
+
+
