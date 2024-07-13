@@ -27,26 +27,25 @@ VALUES
 
 #Using SQL to query a database about statistical data.
 
-#Use a SELECT statement to order the items by price.
+--Use a SELECT statement to order the items by price.
 SELECT item_name
 FROM megastore
 ORDER BY price;
 
-#Show a statistic about the item prices.
+--Show a statistic about the item prices.
 SELECT
 SUM(price)
 FROM megastore;
 
-#Show a statistic about the price for items in the "Kitchen Supplies" category. 
+--Show a statistic about the price for items in the "Kitchen Supplies" category. 
 SELECT
 SUM(price)
 FROM megastore
 GROUP BY"Kitchen Supplies";
 
-#Show a statistic about stock quantity in the "Electronics" category.
+--Show a statistic about stock quantity in the "Electronics" category.
 SELECT
 SUM(stock_quantity)
 AS total
 FROM megastore
-WHERE category = "Electronics"
-;
+WHERE category = "Electronics";
